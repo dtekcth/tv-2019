@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head>
+  <title>DTEK TV</title>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="300" >
+  <style>
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-position: center;
+  background-size: contain;
+  background-image: url(https://dtek.se/static/datalogo.svg);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-family: Helvetica, Arial, Sans-Serif;
+  background-color: #fa6607;
+  font-size: 3em;
+  background-repeat: no-repeat;
+}
+
+h1, h3, h4 {
+  color: #fa6607;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: #fa6607;
+}
+iframe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+</style>
+
+<!-- contains the imgs array -->
+<script src="./PRList.js"></script>
+
+<script>
+
+var curr = 0;
+
+var aocActive = false;
+
+function nextPR() {
+/*
+	if (aocActive) {
+		document.querySelector('iframe').style.display = 'block';
+		document.querySelector('iframe').src = 'https://aoc.dtek.se?' + Math.random();
+		aocActive = ! aocActive;
+		return;
+	} else {
+		document.querySelector('iframe').style.display = 'none';
+		aocActive = ! aocActive;
+	}
+*/
+  if (imgs.length != 0) {
+    var lastPRDay = new Date(imgs[curr][1]);
+    var invalidPRs = 0;
+    while(invalidPRs < imgs.length && lastPRDay <= Date.now()){
+      invalidPRs++;
+      curr++;
+      curr %= imgs.length;
+      lastPRDay = new Date(imgs[curr][1]);
+    }
+
+    if(invalidPRs < imgs.length){
+      document.getElementById("body").style.backgroundImage = "url(" +imgs[curr][0] + ")";
+      curr++;
+      curr %= imgs.length;
+    }
+  }
+}
+
+
+setInterval(nextPR, 30000);
+
+</script>
+</head>
+<body id="body" onload="nextPR()">
+<br>
+</body>
+</html>
